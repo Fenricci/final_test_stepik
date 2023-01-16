@@ -2,7 +2,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 
 class BasePage():
-    def __init__(self, l_browser, url, timeout=10):
+    def __init__(self, l_browser, url, timeout=8):
         self.l_browser = l_browser
         self.url = url
         self.l_browser.implicitly_wait(timeout)
