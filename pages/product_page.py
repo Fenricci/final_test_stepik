@@ -1,5 +1,3 @@
-import time
-
 from selenium.common.exceptions import NoAlertPresentException  # в начале файла
 
 from .base_page import BasePage

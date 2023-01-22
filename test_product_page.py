@@ -1,8 +1,9 @@
-from pages.product_page import ProductPage
-from pages.login_page import LoginPage
+from .pages.product_page import ProductPage
+from .pages.login_page import LoginPage
 import pytest
+from .pages.basket_page import BasketPage
 
-params = list(map(str, range(1)))
+params = list(map(str, range(10)))
 
 
 @pytest.mark.parametrize('param', [
@@ -55,3 +56,11 @@ def test_guest_can_go_to_login_page_from_product_page(l_browser):
     page.open()
     page.go_to_login_page()
     page.should_be_login_page()
+
+def test_guest_cant_see_product_in_basket_opened_from_product_page(l_browser):
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/"
+    page = BasketPage(l_browser, link)
+    page.open()
+    page.go_to_basket_page()
+    page.should_not_be_product_in_basket()
+    page.text_in_basket_no_items()

@@ -2,7 +2,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
-from .locators import BasePageLocators
+from .locators import *
+
 
 class BasePage():
     def __init__(self, l_browser, url, timeout=8):
@@ -43,3 +44,7 @@ class BasePage():
             return False
 
         return True
+
+    def go_to_basket_page(self):
+        link = self.l_browser.find_element(*BasketPageLocators.BASKET_BUTTON)
+        link.click()
