@@ -1,5 +1,4 @@
-from selenium.common.exceptions import NoAlertPresentException  # в начале файла
-
+from selenium.common.exceptions import NoAlertPresentException
 from .base_page import BasePage
 from .locators import ProductPageLocators
 import math
@@ -8,16 +7,17 @@ import math
 class ProductPage(BasePage):
 
     def should_be_add_to_basket_button(self):
-        assert self.l_browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON), "Add to basket button not presented"
-
+        # Проверка кнопки корзины
+        assert self.l_browser.find_element(
+            *ProductPageLocators.ADD_TO_BASKET_BUTTON), "Add to basket button not presented"
 
     def should_be_name_of_product(self):
+        # Проверка названия товара
         assert self.l_browser.find_element(*ProductPageLocators.NAME_OF_PRODUCT), "Name of product not found"
 
-
     def should_be_price_of_product(self):
+        # Проверка цены товара
         assert self.l_browser.find_element(*ProductPageLocators.PRODUCT_PRICE), "Product Price not found"
-
 
     def should_be_msg_about_adding(self):
         # Проверка выхода сообщения что товар добавлен
@@ -26,14 +26,12 @@ class ProductPage(BasePage):
 
         assert product_name == message, "Product name not found on message"
 
-
     def compare_basket_and_product_price(self):
         # Сравнение цен товара и пустой корзины
         product_price = self.l_browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
         basket_price = self.l_browser.find_element(*ProductPageLocators.BASKET_PRICE).text
 
         assert product_price == basket_price, "Product price and basket price is not equal"
-
 
     def solve_quiz_and_get_code(self):
         # Для решения задачки внутри алерта
@@ -50,8 +48,8 @@ class ProductPage(BasePage):
         except NoAlertPresentException:
             print("No second alert presented")
 
-
     def add_product_to_basket(self):
+        # Добавление товара в корзину
         add_to_basket_button = self.l_browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
         add_to_basket_button.click()
 
@@ -67,15 +65,16 @@ class ProductPage(BasePage):
         self.should_be_add_to_basket_button()
         self.add_product_to_basket()
 
-
         self.solve_quiz_and_get_code()
         self.should_be_msg_about_adding()
         self.compare_basket_and_product_price()
 
     def should_not_be_success_message(self):
+        # Проверка отсутствия сообщения об успехе
         assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
             "Success message is presented, but should not be"
 
     def should_not_be_dissapear_success_message(self):
+        # Проверка появления сообщения об успехе
         assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
             "Success message is presented, but should not be"
